@@ -30,7 +30,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
             statement.setString(2, employee.getEmp_name());
             statement.setString(3, employee.getEmp_email());
             statement.setString(4, employee.getEmp_phone());
-            statement.setInt(5, employee.getDept_id());
+            statement.setInt(2, employee.getDept_id());
 
 
             int ans = statement.executeUpdate();
@@ -139,23 +139,3 @@ public class EmployeeDaoImpl implements EmployeeDao {
     }
 
 }
-//    public Employee updateLaptop(Employee employee) throws EmployeeException {
-//        String query = "UPDATE laptop SET model = ?, brand = ? WHERE id = ?";
-//
-//        try (Connection c = Dao.getDao().getConnection();
-//             PreparedStatement ppsmt = c.prepareStatement(query)) {
-//            ppsmt.setString(1, employee.getEmp_name());
-//            ppsmt.setString(2, employee.getEmp_email());
-//            ppsmt.setString(3, employee.getEmp_phone());
-//            int ans = ppsmt.executeUpdate();
-//
-//            if (ans > 0) {
-//                return employee;
-//            } else {
-//                throw new EmployeeException("No  emp_id found with ID: " + employee.getEmp_id());
-//            }
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//        return null;
-//    }
