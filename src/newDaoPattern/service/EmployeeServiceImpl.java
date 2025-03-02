@@ -37,7 +37,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         return name;
     }
 
-    @Override
+
     public Employee getEmployeeByEmail(String emp_email) throws EmployeeException {
         Employee email = dao.getEmployeeByEmail(emp_email);
 
@@ -54,6 +54,13 @@ public class EmployeeServiceImpl implements EmployeeService {
     public Employee updateEmployee(Employee employee) throws EmployeeException {
         Employee Em=dao.updateEmployee(employee);
         return Em;
+    }
+    public String deleteEmployeeById(int emp_id) throws EmployeeException {
+
+        String dlt= dao.deleteEmployeeById(emp_id);
+        return dlt;
+
+
     }
 }
 

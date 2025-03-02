@@ -13,11 +13,11 @@ public interface EmployeeService {
 
     Employee getEmployeeByName(String emp_name) throws EmployeeException;
 
-    Employee getEmployeeByEmail(String emp_email) throws EmployeeException;
-
-    public List<Employee>getAllEmployees()throws EmployeeException;
+//    Employee getEmployeeByEmail(String emp_email) throws EmployeeException;
+public List<Employee>getAllEmployees()throws EmployeeException;
 
     public Employee updateEmployee(Employee employee) throws EmployeeException ;
+    String deleteEmployeeById(int emp_id) throws EmployeeException;
 
 
 }

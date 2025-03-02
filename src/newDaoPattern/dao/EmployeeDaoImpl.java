@@ -30,7 +30,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
             statement.setString(2, employee.getEmp_name());
             statement.setString(3, employee.getEmp_email());
             statement.setString(4, employee.getEmp_phone());
-            statement.setInt(2, employee.getDept_id());
+            statement.setInt(5, employee.getDept_id());
 
 
             int ans = statement.executeUpdate();
@@ -78,9 +78,43 @@ public class EmployeeDaoImpl implements EmployeeDao {
     }
 
     @Override
-    public Employee getEmpByName(String empName) {
+    public Employee getEmpByName(String empName)throws EmployeeException {
+        String query = "SELECT * FROM employees WHERE emp_name = ?";
+        Employee employee = null;
+
+        try (Connection connection = Dao.getDao().getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)) {
+
+            statement.setString(1, empName);
+
+            try (ResultSet rs = statement.executeQuery()) {
+                if (rs.next()) {
+                    employee = new Employee(
+                            rs.getInt("emp_id"),
+                            rs.getString("emp_name"),
+                            rs.getString("emp_email"),
+                            rs.getString("emp_phone"),
+                            rs.getInt("dept_id")
+                    );
+                } else {
+                    throw new EmployeeException("Employee not found with name: " + empName);
+                }
+            }
+        } catch (SQLException | EmployeeException e) {
+            e.printStackTrace();
+            throw new EmployeeException("Error retrieving employee with name: "+e);
+        }
+
+        return employee;
+    }
+
+
+
+    @Override
+    public Employee getEmployeeByEmail(String empEmail) {
         return null;
     }
+
 
     public List<Employee> getAllEmployees() throws EmployeeException {
         String query = "SELECT * FROM employees";
@@ -108,10 +142,6 @@ public class EmployeeDaoImpl implements EmployeeDao {
         return employees;
     }
 
-    @Override
-    public Employee getEmployeeByEmail(String empEmail) {
-        return null;
-    }
 
     @Override
     public Employee updateEmployee(Employee employee) {
@@ -138,4 +168,25 @@ public class EmployeeDaoImpl implements EmployeeDao {
         return null;
     }
 
-}
+    @Override
+    public String deleteEmployeeById(int emp_id) throws EmployeeException {
+        String query = "DELETE FROM employees WHERE emp_id=?";
+
+        try(Connection c = Dao.getDao().getConnection();
+            PreparedStatement ppsmt = c.prepareStatement(query)){
+
+            ppsmt.setInt(1, emp_id);
+            int ans = ppsmt.executeUpdate();
+
+            if(ans>0){
+                return "Employee deleted successfully";
+            }else {
+                throw new EmployeeException("No employee found with ID:" + emp_id);
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return "Failed to delete employee";
+    }
+    }
+
