@@ -53,7 +53,7 @@ public  class Demo2 {
 
 
 
-//        UPDATE - Updating employee details
+     //      UPDATE - Updating employee details
         Employee updatedEmployee=new Employee( 102," Trisha Patel","trishapatel@gmail.com","9873217890",13);
   try {
             Employee updated = service.updateEmployee(updatedEmployee);
@@ -66,7 +66,7 @@ public  class Demo2 {
 
 
         // DELETE EMPLOYEE
-//
+
         try{
             String deleteMessage = service.deleteEmployeeById(102);
             System.out.println(deleteMessage);
